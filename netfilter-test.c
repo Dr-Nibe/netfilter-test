@@ -19,24 +19,6 @@ void usage() {
     puts("sample : netfilter-test test.gilgil.net");
 }
 
-static u_int32_t print_pkt(struct nfq_data *tb)
-{
-	int id = 0;
-	struct nfqnl_msg_packet_hdr *ph;
-	int ret;
-	unsigned char *data;
-
-	ph = nfq_get_msg_packet_hdr(tb);
-	if (ph) {
-		id = ntohl(ph->packet_id);
-	}
-
-	ret = nfq_get_payload(tb, &data);
-	write(1, data, ret);
-
-	return id;
-}
-
 static int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
 	      struct nfq_data *nfa, void *d)
 {
